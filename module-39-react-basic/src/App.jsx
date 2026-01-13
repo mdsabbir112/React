@@ -1,8 +1,37 @@
 
 import './App.css'
 import Counter from './Counter'
+import Score from './Score'
+import Api from './Api'
+import { Suspense } from 'react';
+import Loading from './Loading';
+import Friends from './Friends';
+import Photos from './Photos'
+
+// Api always Call after the import sections 
+
+const fetchApi = fetch('https://jsonplaceholder.typicode.com/users')
+    .then (res => res.json())
+
+    //Call an Api using the concept of async and await 
+    const fetchFriend = async() => {
+      const res = await fetch('https://jsonplaceholder.typicode.com/users');
+      return res.json();
+    }
+
+    // Call an API using the concept of Async and Await for Photo.jsx
+    const fetchUsers  = async() => {
+      const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+      return res.json();
+    }
 
 function App() {
+
+  //insert a Function into an Variable 
+  const FriendsApi = fetchFriend();
+  //insert a Function into an Variable 
+  const FetchUser = fetchUsers();
+  
 
   // WE always create the event Function before return 
 
@@ -26,7 +55,24 @@ function App() {
       
       <h2>Vite + React</h2>
 
-    <Counter />
+      <Suspense fallback= {<Loading />}>
+        <Photos FetchUser= {FetchUser}></Photos>
+      </Suspense>
+
+      <Suspense fallback={<Loading />}>
+      {/* Api er Vhitore fetchApi namer Variable ke props and its Value hishebe Pathaia dice 
+      jeno API JSX ai props ta ke recive kore (Distructure Hishebe , Formate : ({name})) use korte pare  */}
+        <Api fetchApi={fetchApi}></Api>
+      </Suspense>
+
+      <Suspense fallback= {<Loading/>}>
+        <Friends FriendsApi={FriendsApi} />
+      </Suspense>
+
+      
+
+    {/* <Counter /> */}
+    <Score />
 
 
 
