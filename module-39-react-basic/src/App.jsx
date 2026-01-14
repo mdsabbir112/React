@@ -6,7 +6,8 @@ import Api from './Api'
 import { Suspense } from 'react';
 import Loading from './Loading';
 import Friends from './Friends';
-import Photos from './Photos'
+import Photos from './Photos';
+import UserState from './UserState';
 
 // Api always Call after the import sections 
 
@@ -54,6 +55,8 @@ function App() {
     <>
       
       <h2>Vite + React</h2>
+
+      <UserState/>
 
       <Suspense fallback= {<Loading />}>
         <Photos FetchUser= {FetchUser}></Photos>
